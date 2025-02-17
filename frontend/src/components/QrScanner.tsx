@@ -1,24 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, Alert } from 'react-native';
-import { Camera as CameraComponent, CameraType, useCameraPermissions } from 'expo-camera';
+import { RNCamera } from 'react-native-camera';
 
 const QRScanner: React.FC = () => {
-  const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
   const [scannedData, setScannedData] = useState<string | null>(null);
 
-  if (!permission) return <Text>Requesting camera permission...</Text>;
-
-  if (!permission.granted) {
-    return (
-      <View style={styles.container}>
-        <Text>No access to camera</Text>
-        <Button title="Grant Permission" onPress={requestPermission} />
-      </View>
-    );
-  }
-
-  const handleBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
+  const handleBarCodeScanned = ({ data }: { data: string }) => {
     setScanned(true);
     setScannedData(data);
     Alert.alert('Scanned Data', data, [{ text: 'OK', onPress: () => setScanned(false) }]);
@@ -26,13 +14,11 @@ const QRScanner: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <CameraComponent
+      <RNCamera
         style={styles.camera}
-        type={CameraType.back}
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        barCodeScannerSettings={{
-          barCodeTypes: ['qr'],
-        }}
+        type={RNCamera.Constants.Type.back}
+        onBarCodeRead={scanned ? undefined : handleBarCodeScanned}
+        flashMode={RNCamera.Constants.FlashMode.auto}
       />
       <View style={styles.overlay}>
         <Text style={styles.text}>{scannedData ? `Scanned: ${scannedData}` : 'Scan a QR Code'}</Text>

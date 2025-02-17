@@ -10,10 +10,8 @@
     
     "scheme": "myapp",
     "plugins": [
-      "expo-camera",
-      {
-        "cameraPermission": "Allow this app to access the camera."
-      }
+      "expo-camera"
+     
 
     ],
     "android": {
