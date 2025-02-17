@@ -1,0 +1,26 @@
+{
+  "name": "Frontend",
+  "displayName": "Frontend",
+  "expo": {
+    "jsEngine": "hermes",
+
+    "experimental": {
+      "newArchEnabled": true
+    },
+    
+    "scheme": "myapp",
+    "plugins": [
+      "expo-camera",
+      {
+        "cameraPermission": "Allow this app to access the camera."
+      }
+
+    ],
+    "android": {
+      "permissions": [
+        "android.permission.CAMERA"
+      ],
+      "package": "com.anonymous.frontend"
+    }
+  }
+}
